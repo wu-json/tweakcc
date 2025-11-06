@@ -9,10 +9,11 @@ import { Theme } from '../types.js';
  */
 export const writeHardcodedThemeObjects = (
   oldFile: string,
-  activeTheme: Theme
+  themes: Theme[]
 ): string | null => {
-  // Only apply this patch if using monochrome theme
-  if (activeTheme.id !== 'monochrome') {
+  // Only apply this patch if monochrome theme exists in the config
+  const monochromeTheme = themes.find((t) => t.id === 'monochrome');
+  if (!monochromeTheme) {
     return oldFile;
   }
 
@@ -41,22 +42,22 @@ export const writeHardcodedThemeObjects = (
 
   const endIndex = searchStart + endMatch.index;
 
-  // Get monochrome rainbow colors from the active theme
+  // Get monochrome rainbow colors from the monochrome theme
   const monoColors = {
-    rainbow_red: activeTheme.colors.rainbow_red,
-    rainbow_orange: activeTheme.colors.rainbow_orange,
-    rainbow_yellow: activeTheme.colors.rainbow_yellow,
-    rainbow_green: activeTheme.colors.rainbow_green,
-    rainbow_blue: activeTheme.colors.rainbow_blue,
-    rainbow_indigo: activeTheme.colors.rainbow_indigo,
-    rainbow_violet: activeTheme.colors.rainbow_violet,
-    rainbow_red_shimmer: activeTheme.colors.rainbow_red_shimmer,
-    rainbow_orange_shimmer: activeTheme.colors.rainbow_orange_shimmer,
-    rainbow_yellow_shimmer: activeTheme.colors.rainbow_yellow_shimmer,
-    rainbow_green_shimmer: activeTheme.colors.rainbow_green_shimmer,
-    rainbow_blue_shimmer: activeTheme.colors.rainbow_blue_shimmer,
-    rainbow_indigo_shimmer: activeTheme.colors.rainbow_indigo_shimmer,
-    rainbow_violet_shimmer: activeTheme.colors.rainbow_violet_shimmer,
+    rainbow_red: monochromeTheme.colors.rainbow_red,
+    rainbow_orange: monochromeTheme.colors.rainbow_orange,
+    rainbow_yellow: monochromeTheme.colors.rainbow_yellow,
+    rainbow_green: monochromeTheme.colors.rainbow_green,
+    rainbow_blue: monochromeTheme.colors.rainbow_blue,
+    rainbow_indigo: monochromeTheme.colors.rainbow_indigo,
+    rainbow_violet: monochromeTheme.colors.rainbow_violet,
+    rainbow_red_shimmer: monochromeTheme.colors.rainbow_red_shimmer,
+    rainbow_orange_shimmer: monochromeTheme.colors.rainbow_orange_shimmer,
+    rainbow_yellow_shimmer: monochromeTheme.colors.rainbow_yellow_shimmer,
+    rainbow_green_shimmer: monochromeTheme.colors.rainbow_green_shimmer,
+    rainbow_blue_shimmer: monochromeTheme.colors.rainbow_blue_shimmer,
+    rainbow_indigo_shimmer: monochromeTheme.colors.rainbow_indigo_shimmer,
+    rainbow_violet_shimmer: monochromeTheme.colors.rainbow_violet_shimmer,
   };
 
   // Extract the section containing all theme objects

@@ -39,6 +39,7 @@ import { writePatchesAppliedIndication } from './patchesAppliedIndication.js';
 import { applySystemPrompts } from './systemPrompts.js';
 import { writeFixLspSupport } from './fixLspSupport.js';
 import { writeToolsets } from './toolsets.js';
+import { writeHardcodedThemeObjects } from './hardcodedThemeObjects.js';
 
 export interface LocationResult {
   startIndex: number;
@@ -259,6 +260,9 @@ export const applyCustomization = async (
   let result: string | null = null;
   if (config.settings.themes && config.settings.themes.length > 0) {
     if ((result = writeThemes(content, config.settings.themes)))
+      content = result;
+    // Fix hardcoded theme objects that cause orange to appear in monochrome theme
+    if ((result = writeHardcodedThemeObjects(content, config.settings.themes)))
       content = result;
   }
 
